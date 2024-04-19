@@ -11,5 +11,10 @@
 
     <artifactId>micro-registry-client</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.gmail.rezamoeinpe</groupId>
+            <artifactId>micro-registry-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>
