@@ -1,7 +1,10 @@
-package com.gmail.rezamoeinpe.microregistrycommon.model;
+package com.gmail.rezamoeinpe.microregistrycommon.protocol;
 
 import com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceModelValidationException;
 import com.gmail.rezamoeinpe.microregistrycommon.utils.StringUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
 
 import static com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceModelValidationException.ServiceModelValidationError.*;
 
@@ -62,5 +65,21 @@ public record ServiceModel(String serviceName, String host, int port, String ent
 
     public ServiceModel(String serviceName, String host, int port) {
         this(serviceName, host, port, null);
+    }
+
+    public byte[] byteInfo() {
+        var joiner = new StringJoiner(",", "{", "}")
+                .add(serviceName())
+                .add(host())
+                .add(String.valueOf(port()));
+        if (entry() != null)
+            joiner.add(entry());
+        return joiner.toString().getBytes(StandardCharsets.US_ASCII);
+    }
+
+    public enum ServiceStatus {
+        ACTIVE,
+        IDLE,
+        UNAVAILING
     }
 }

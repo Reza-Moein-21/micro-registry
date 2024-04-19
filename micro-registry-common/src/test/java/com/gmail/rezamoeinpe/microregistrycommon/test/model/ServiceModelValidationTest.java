@@ -1,9 +1,11 @@
 package com.gmail.rezamoeinpe.microregistrycommon.test.model;
 
-import com.gmail.rezamoeinpe.microregistrycommon.model.ServiceModel;
 import com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceModelValidationException;
+import com.gmail.rezamoeinpe.microregistrycommon.protocol.ServiceModel;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.nio.charset.StandardCharsets;
 
 import static com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceModelValidationException.ServiceModelValidationError.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,12 +14,12 @@ public class ServiceModelValidationTest {
 
     @Test
     void validServiceModel() {
-        var validModel = new ServiceModel("my-service-name","prod-machine",433,"https://prod-machine/health");
+        var validModel = new ServiceModel("my-service-name", "prod-machine", 433, "https://prod-machine/health");
         assertEquals(validModel.serviceName(), "my-service-name");
         assertEquals(validModel.host(), "prod-machine");
         assertEquals(validModel.port(), 433);
         assertEquals(validModel.entry(), "https://prod-machine/health");
-
+        assertArrayEquals(validModel.byteInfo(), "{my-service-name,prod-machine,433,https://prod-machine/health}".getBytes(StandardCharsets.US_ASCII));
     }
 
     @Nested
