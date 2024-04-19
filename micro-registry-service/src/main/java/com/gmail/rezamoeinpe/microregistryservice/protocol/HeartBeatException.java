@@ -1,14 +1,17 @@
 package com.gmail.rezamoeinpe.microregistryservice.protocol;
 
-public class HeartBeatException extends Exception {
+import com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceException;
+
+public final class HeartBeatException extends ServiceException {
     private final HeartBeatParserError error;
 
     public HeartBeatException(HeartBeatParserError error) {
+        super(error.name());
         this.error = error;
     }
 
     public HeartBeatException(HeartBeatParserError error, String message) {
-        super(message);
+        super(error.name(), message);
         this.error = error;
     }
 

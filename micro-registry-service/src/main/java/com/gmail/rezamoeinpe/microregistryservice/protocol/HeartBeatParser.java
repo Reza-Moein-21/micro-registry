@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
-public class HeartBeatParser {
+public final class HeartBeatParser {
     private final static byte MAX_SERVICE_NAME_LENGTH = 30;
     private final static byte MIN_SERVICE_NAME_LENGTH = 2;
     private final static char START_CHARACTER = '[';

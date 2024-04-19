@@ -1,4 +1,4 @@
-package com.gmail.rezamoeinpe.microregistryservice.test;
+package com.gmail.rezamoeinpe.microregistryservice.test.protocol;
 
 import com.gmail.rezamoeinpe.microregistryservice.protocol.HeartBeatException;
 import com.gmail.rezamoeinpe.microregistryservice.protocol.HeartBeatParser;

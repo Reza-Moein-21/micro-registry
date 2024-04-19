@@ -11,11 +11,18 @@
 
     <artifactId>micro-registry-service</artifactId>
 
+    <properties>
+        <h2.version>2.2.224</h2.version>
+    </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.gmail.rezamoeinpe</groupId>
+            <artifactId>micro-registry-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.2.224</version>
+            <version>${h2.version}</version>
         </dependency>
     </dependencies>
 </project>
