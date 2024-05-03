@@ -24,7 +24,7 @@ public record ServiceModel(String serviceName, String host, int port, String ent
         if (serviceName == null)
             throw new ServiceModelValidationException(SERVICE_NAME_REQUIRED);
 
-        if (!StringUtils.isPureAscii(serviceName))
+        if (StringUtils.isNotPureAscii(serviceName))
             throw new ServiceModelValidationException(NON_US_ASCII_SERVICE_NAME);
 
         if (!Character.isLetter(serviceName.charAt(0)))
@@ -48,7 +48,7 @@ public record ServiceModel(String serviceName, String host, int port, String ent
         if (host.length() < MIN_HOST_LENGTH)
             throw new ServiceModelValidationException(MIN_HOST_NOT_PROVIDED);
 
-        if (!StringUtils.isPureAscii(host))
+        if (StringUtils.isNotPureAscii(host))
             throw new ServiceModelValidationException(NON_US_ASCII_HOST);
 
 

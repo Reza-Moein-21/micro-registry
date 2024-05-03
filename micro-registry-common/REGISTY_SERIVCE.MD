@@ -64,6 +64,8 @@ Available Response Status
 
 	HeartBeat[<data>]
 
+    Ex. HeartBeat[{my-service,green-host,443,/info}]
+
 ### Heart Beat data format
 
     {<service-name>,<host>,<port>,?<entry>}
