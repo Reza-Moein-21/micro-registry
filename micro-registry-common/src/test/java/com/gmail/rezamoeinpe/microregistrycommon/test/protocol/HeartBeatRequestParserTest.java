@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException.HeartBeatRequestParserError.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HeartBeatRequestParserTest {
 
@@ -89,6 +88,15 @@ class HeartBeatRequestParserTest {
         assertEquals("green-host", expectedModel.host());
         assertEquals(443, expectedModel.port());
         assertEquals("/info", expectedModel.entry());
+    }
+
+    @Test
+    void validHeartBeatNoEntry() {
+        var expectedModel = parser.parser(IOUtils.toChannel("HeartBeat[{my-service,green-host,443}]"));
+        assertEquals("my-service", expectedModel.serviceName());
+        assertEquals("green-host", expectedModel.host());
+        assertEquals(443, expectedModel.port());
+        assertNull(expectedModel.entry());
     }
 
     @Test

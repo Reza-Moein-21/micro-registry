@@ -101,10 +101,12 @@ public final class HeartBeatRequestParser implements Parser<ServiceModel> {
 
             if (this.entry == null) {
                 this.entry = entryFound(nextByte);
+                this.endTokenFound = nextByte == CLOSING_BRACKET;
                 continue;
             }
 
             this.endTokenFound = nextByte == CLOSING_BRACKET;
+
         }
 
         if (!this.startTokenFound)
