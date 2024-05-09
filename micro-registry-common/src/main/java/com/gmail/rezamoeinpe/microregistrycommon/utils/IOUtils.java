@@ -9,18 +9,21 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class IOUtils {
-    private static final int BUFFER_SIZE = 1024;
 
     public static ReadableByteChannel toChannel(String text) {
         return Channels.newChannel(new ByteArrayInputStream(text.getBytes()));
+    }
+
+    public static ByteBuffer toBytes(String text) {
+        return ByteBuffer.wrap(text.getBytes());
     }
 
     public static ReadableByteChannel toChannel(byte[] bytes) {
         return Channels.newChannel(new ByteArrayInputStream(bytes));
     }
 
-    public static ByteBuffer readToBuffer(ReadableByteChannel channel) {
-        var buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
+    public static ByteBuffer readToBuffer(ReadableByteChannel channel, int bufferSize) {
+        var buffer = ByteBuffer.allocateDirect(bufferSize);
         try {
             channel.read(buffer);
         } catch (IOException e) {

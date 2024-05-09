@@ -6,14 +6,13 @@ import com.gmail.rezamoeinpe.microregistrycommon.exception.ServerErrorException;
 import com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceException;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.Parser;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.ServiceModel;
-import com.gmail.rezamoeinpe.microregistrycommon.utils.IOUtils;
 import com.gmail.rezamoeinpe.microregistrycommon.utils.StringUtils;
 
-import java.nio.channels.ReadableByteChannel;
+import java.nio.ByteBuffer;
 
 import static com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException.HeartBeatRequestParserError.*;
 
-public final class HeartBeatRequestParser implements Parser<ServiceModel> {
+public final class HeartBeatRequestParser implements Parser<HeartBeatRequest> {
 
     private static final byte CLOSING_BRACKET = 0x5D;
 
@@ -63,11 +62,9 @@ public final class HeartBeatRequestParser implements Parser<ServiceModel> {
     private boolean modelBeginningFound;
 
     @Override
-    public ServiceModel parser(ReadableByteChannel channel) throws ServiceException {
-        if (channel == null)
+    public HeartBeatRequest parser(ByteBuffer buffer) throws ServiceException {
+        if (buffer == null)
             throw new ServerErrorException();
-
-        var buffer = IOUtils.readToBuffer(channel);
 
         while (buffer.hasRemaining()) {
             byte nextByte = buffer.get();
@@ -113,7 +110,7 @@ public final class HeartBeatRequestParser implements Parser<ServiceModel> {
         if (!this.endTokenFound)
             throw new HeartBeatRequestParserException(INVALID_END_TOKEN);
 
-        return new ServiceModel(this.serviceName, this.host, this.port, this.entry);
+        return new HeartBeatRequest(new ServiceModel(this.serviceName, this.host, this.port, this.entry));
     }
 
 

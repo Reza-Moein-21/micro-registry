@@ -2,8 +2,8 @@ package com.gmail.rezamoeinpe.microregistrycommon.protocol;
 
 import com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceException;
 
-import java.nio.channels.ReadableByteChannel;
+import java.nio.ByteBuffer;
 
-public interface Parser<T> {
-    T parser(ReadableByteChannel channel) throws ServiceException;
+public interface Parser<T extends AbstractRequest> {
+    T parser(ByteBuffer buffer) throws ServiceException;
 }

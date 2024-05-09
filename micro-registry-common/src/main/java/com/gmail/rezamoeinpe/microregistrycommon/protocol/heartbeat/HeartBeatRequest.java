@@ -17,4 +17,8 @@ public final class HeartBeatRequest extends AbstractRequest {
         if (model == null) return null;
         return model.byteInfo();
     }
+
+    public ServiceModel getModel() {
+        return this.model;
+    }
 }
