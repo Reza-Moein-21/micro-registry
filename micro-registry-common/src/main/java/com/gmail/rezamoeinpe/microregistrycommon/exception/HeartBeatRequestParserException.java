@@ -7,7 +7,6 @@ public class HeartBeatRequestParserException extends ServiceException {
     }
 
     public enum  HeartBeatRequestParserError {
-        SERVER_ERROR,
         INVALID_START_TOKEN,
         INVALID_END_TOKEN,
         INVALID_MODEL_START_TOKEN,

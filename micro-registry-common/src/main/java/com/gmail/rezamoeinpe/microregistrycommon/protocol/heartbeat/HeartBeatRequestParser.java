@@ -2,20 +2,18 @@ package com.gmail.rezamoeinpe.microregistrycommon.protocol.heartbeat;
 
 import com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException;
 import com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException.HeartBeatRequestParserError;
+import com.gmail.rezamoeinpe.microregistrycommon.exception.ServerErrorException;
 import com.gmail.rezamoeinpe.microregistrycommon.exception.ServiceException;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.Parser;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.ServiceModel;
+import com.gmail.rezamoeinpe.microregistrycommon.utils.IOUtils;
 import com.gmail.rezamoeinpe.microregistrycommon.utils.StringUtils;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
 import static com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException.HeartBeatRequestParserError.*;
 
 public final class HeartBeatRequestParser implements Parser<ServiceModel> {
-
-    private static final int BUFFER_SIZE = 1024;
 
     private static final byte CLOSING_BRACKET = 0x5D;
 
@@ -67,9 +65,9 @@ public final class HeartBeatRequestParser implements Parser<ServiceModel> {
     @Override
     public ServiceModel parser(ReadableByteChannel channel) throws ServiceException {
         if (channel == null)
-            throw new HeartBeatRequestParserException(SERVER_ERROR);
+            throw new ServerErrorException();
 
-        var buffer = readToBuffer(channel);
+        var buffer = IOUtils.readToBuffer(channel);
 
         while (buffer.hasRemaining()) {
             byte nextByte = buffer.get();
@@ -232,14 +230,4 @@ public final class HeartBeatRequestParser implements Parser<ServiceModel> {
         return startTokenCounter == START_TOKENS.length;
     }
 
-    private ByteBuffer readToBuffer(ReadableByteChannel channel) {
-        var buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
-        try {
-            channel.read(buffer);
-        } catch (IOException e) {
-            throw new HeartBeatRequestParserException(SERVER_ERROR);
-        }
-        buffer.flip();
-        return buffer;
-    }
 }

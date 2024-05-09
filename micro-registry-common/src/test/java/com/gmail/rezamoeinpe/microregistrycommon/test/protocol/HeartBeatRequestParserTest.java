@@ -1,6 +1,7 @@
 package com.gmail.rezamoeinpe.microregistrycommon.test.protocol;
 
 import com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException;
+import com.gmail.rezamoeinpe.microregistrycommon.exception.ServerErrorException;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.ServiceModel;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.heartbeat.HeartBeatRequest;
 import com.gmail.rezamoeinpe.microregistrycommon.protocol.heartbeat.HeartBeatRequestParser;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.gmail.rezamoeinpe.microregistrycommon.exception.HeartBeatRequestParserException.HeartBeatRequestParserError.*;
+import static com.gmail.rezamoeinpe.microregistrycommon.exception.ServerErrorException.SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HeartBeatRequestParserTest {
@@ -23,8 +25,8 @@ class HeartBeatRequestParserTest {
 
     @Test
     void passingNullChannel() {
-        var e = assertThrows(HeartBeatRequestParserException.class, () -> parser.parser(null));
-        assertEquals(SERVER_ERROR.name(), e.getCode());
+        var e = assertThrows(ServerErrorException.class, () -> parser.parser(null));
+        assertEquals(SERVER_ERROR, e.getCode());
     }
 
     @Test

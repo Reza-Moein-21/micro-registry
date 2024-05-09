@@ -20,6 +20,7 @@ public record ServiceModel(String serviceName, String host, int port, String ent
 
     public final static byte MAX_ENTRY_LENGTH = 100;
 
+    // TODO maybe it should remove
     public ServiceModel {
         if (serviceName == null)
             throw new ServiceModelValidationException(SERVICE_NAME_REQUIRED);
